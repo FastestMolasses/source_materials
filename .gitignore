@@ -1,0 +1,8 @@
+target/
+debug/
+.DS_Store
+
+dist/
+sample.txt
+
+*.glb
