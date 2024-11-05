@@ -3,14 +3,16 @@ use crate::world::GameState;
 use bevy::diagnostic::{DiagnosticsStore, FrameTimeDiagnosticsPlugin};
 use bevy::prelude::*;
 use bevy_asset_loader::prelude::*;
-use iyes_progress::{ProgressPlugin, ProgressCounter};
+use iyes_progress::{ProgressCounter, ProgressPlugin};
 
 pub struct LoadingPlugin;
 
 impl Plugin for LoadingPlugin {
     fn build(&self, app: &mut App) {
         app.add_plugins(ProgressPlugin::new(GameState::Loading).continue_to(GameState::Playing))
-            .add_loading_state(LoadingState::new(GameState::Loading))
+            .add_loading_state(
+                LoadingState::new(GameState::Loading).load_collection::<WorldProps>(),
+            )
             .add_systems(
                 Update,
                 print_progress
@@ -18,6 +20,12 @@ impl Plugin for LoadingPlugin {
                     .after(LoadingStateSet(GameState::Loading)),
             );
     }
+}
+
+#[derive(AssetCollection, Resource)]
+pub struct WorldProps {
+    #[asset(path = "models/wood_crate.glb#Scene0")]
+    pub wood_crate: Handle<Scene>,
 }
 
 fn print_progress(

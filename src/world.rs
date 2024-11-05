@@ -2,6 +2,7 @@
 
 use crate::game::GamePlugin;
 use crate::loading::LoadingPlugin;
+use crate::application::ApplicationPlugin;
 use bevy::prelude::*;
 
 #[derive(States, Default, Clone, Eq, PartialEq, Debug, Hash)]
@@ -20,6 +21,7 @@ pub struct WorldPlugin;
 impl Plugin for WorldPlugin {
     fn build(&self, app: &mut App) {
         app.init_state::<GameState>().add_plugins((
+            ApplicationPlugin,
             LoadingPlugin,
             GamePlugin,
         ));

@@ -6,3 +6,6 @@ dist/
 sample.txt
 
 *.glb
+*.txt
+*.json
+.repomixignore
